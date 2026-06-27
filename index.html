@@ -141,18 +141,26 @@
     }
 
     // ============ IN-APP NOTIFICATIONS ============
-    function loadNotifications(){
-      if(notifUnsub)notifUnsub();
-      notifUnsub=db.collection('notifications')
-        .where('userId','==',getMyName())
-        .orderBy('createdAt','desc')
-        .limit(20)
-        .onSnapshot(s=>{
-          notifications=[];s.forEach(d=>notifications.push({id:d.id,...d.data()}));
-          notifCount=notifications.filter(n=>!n.read).length;
-          render();
-        });
-    }
+   function loadNotifications(){
+  if(notifUnsub) notifUnsub();
+
+  notifUnsub = db.collection('notifications')
+    .where('userId','==',getMyName())
+    .orderBy('createdAt','desc')
+    .limit(20)
+    .onSnapshot(
+      s=>{
+        notifications=[];
+        s.forEach(d=>notifications.push({id:d.id,...d.data()}));
+        notifCount=notifications.filter(n=>!n.read).length;
+        render();
+      },
+      err=>{
+        console.error("Notification Error:",err);
+        showToast("Notification Error",err.message,"error");
+      }
+    );
+   } 
 
     async function createNotification(userName,type,message,roomId){
       await db.collection('notifications').add({
