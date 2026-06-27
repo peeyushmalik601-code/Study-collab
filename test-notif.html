@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head><title>Notification Test</title></head>
+<body>
+  <h2>Notification Test</h2>
+  <button onclick="test()">Test Notification</button>
+  <div id="result"></div>
+  
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
+  <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyDo2oJO2M2EiDKvvBpY2N7b8MZ38WeO5G4",
+      authDomain: "study-8820a.firebaseapp.com",
+      projectId: "study-8820a",
+      storageBucket: "study-8820a.firebasestorage.app",
+      messagingSenderId: "599109744780",
+      appId: "1:599109744780:web:ffc9c509a0557288dfa3a9"
+    });
+    const messaging = firebase.messaging();
+    
+    async function test() {
+      const r = document.getElementById('result');
+      r.innerHTML = 'Testing...';
+      
+      // Step 1: Permission
+      const perm = await Notification.requestPermission();
+      r.innerHTML += `<p>1. Permission: ${perm}</p>`;
+      
+      if (perm !== 'granted') { r.innerHTML += '<p>❌ Permission denied!</p>'; return; }
+      
+      // Step 2: Service Worker
+      const regs = await navigator.serviceWorker.getRegistrations();
+      r.innerHTML += `<p>2. Service Workers: ${regs.length} found</p>`;
+      
+      // Step 3: Register SW
+      try {
+        const reg = await navigator.serviceWorker.register('/Study-collab/firebase-messaging-sw.js');
+        r.innerHTML += `<p>3. SW Registered: ✅</p>`;
+      } catch(e) {
+        r.innerHTML += `<p>3. SW Error: ${e.message}</p>`;
+      }
+      
+      // Step 4: Get Token
+      try {
+        const token = await messaging.getToken({ 
+          vapidKey: 'BAp00Omr4ezHvV-Ukp5NipbaklNXsjGdZmuF0n9MywIZsTZqWLspbCrDEVNxckBnbQDvdT0HzhzvNB4VUdJhOZ4' 
+        });
+        r.innerHTML += `<p>4. Token: ${token ? '✅ Got it!' : '❌ No token'}</p>`;
+        if (token) r.innerHTML += `<p style="word-break:break-all;font-size:10px;">${token}</p>`;
+      } catch(e) {
+        r.innerHTML += `<p>4. Token Error: ${e.message}</p>`;
+      }
+      
+      // Step 5: Send test notification
+      if (Notification.permission === 'granted') {
+        new Notification('Test 🔔', { body: 'If you see this, notifications work!', icon: 'logo.png' });
+        r.innerHTML += '<p>5. Test notification sent! ✅</p>';
+      }
+    }
+  </script>
+</body>
+</html>
