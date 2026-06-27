@@ -11,18 +11,13 @@
   <meta name="theme-color" content="#4facfe">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="StudyCollab">
   <meta property="og:title" content="StudyCollab - Study Together">
   <meta property="og:description" content="Collaborate with friends, track progress, and ace your exams!">
   <meta property="og:image" content="https://peeyushmalik601-code.github.io/Study-collab/logo.png">
-  <meta property="og:url" content="https://peeyushmalik601-code.github.io/Study-collab/">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
   
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
   
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -36,7 +31,7 @@
     .input{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:14px 18px;color:#fff;outline:none;width:100%;font-size:15px;font-family:'Inter',sans-serif;transition:all 0.3s ease}
     .input::placeholder{color:rgba(255,255,255,0.35)}
     .input:focus{border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.13)}
-    .dock{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.07);backdrop-filter:blur(35px);-webkit-backdrop-filter:blur(35px);border:1px solid rgba(255,255,255,0.18);border-radius:50px;padding:6px 14px;display:flex;gap:6px;z-index:1000;box-shadow:0 12px 48px rgba(0,0,0,0.5)}
+    .dock{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.07);backdrop-filter:blur(35px);border:1px solid rgba(255,255,255,0.18);border-radius:50px;padding:6px 14px;display:flex;gap:6px;z-index:1000;box-shadow:0 12px 48px rgba(0,0,0,0.5)}
     .dock-item{width:46px;height:46px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:21px;border:none;background:transparent;color:rgba(255,255,255,0.55);transition:all 0.2s}
     .dock-item.active{background:rgba(255,255,255,0.22);color:#fff;transform:scale(1.12)}
     .checkbox{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,0.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.2s;background:transparent;color:white}
@@ -63,11 +58,9 @@
     .pending-tag{background:rgba(255,107,129,0.25);color:#ff6b81}
     .notif-badge{position:absolute;top:-6px;right:-6px;background:#ff4757;color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:10px;min-width:16px;text-align:center}
     .notif-panel{position:fixed;top:80px;right:10px;background:rgba(30,30,60,0.98);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;width:320px;max-height:400px;overflow-y:auto;z-index:2000;box-shadow:0 20px 60px rgba(0,0,0,0.6);padding:16px;display:none}
-    .notif-item{padding:12px;border-radius:12px;margin-bottom:6px;background:rgba(255,255,255,0.04);font-size:13px;cursor:pointer;transition:all 0.2s}
+    .notif-item{padding:12px;border-radius:12px;margin-bottom:6px;background:rgba(255,255,255,0.04);font-size:13px;transition:all 0.2s}
     .notif-item:hover{background:rgba(255,255,255,0.1)}
     .notif-time{font-size:10px;opacity:0.5;margin-top:4px}
-    
-    /* MODALS */
     .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;animation:fadeIn 0.2s ease-out}
     .modal-box{background:rgba(30,30,60,0.98);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.15);border-radius:24px;padding:28px;max-width:360px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
     .modal-icon{font-size:48px;margin-bottom:12px}
@@ -76,19 +69,15 @@
     .modal-buttons{display:flex;gap:10px}
     .modal-btn{flex:1;padding:12px 20px;border-radius:50px;border:1px solid rgba(255,255,255,0.2);font-weight:600;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;color:#fff;background:transparent}
     .modal-btn:hover{transform:scale(1.03)}
-    .modal-btn:active{transform:scale(0.96)}
     .modal-btn-cancel{background:rgba(255,255,255,0.06)}
     .modal-btn-delete{background:rgba(255,71,87,0.35);border-color:rgba(255,71,87,0.5)}
     .modal-btn-leave{background:rgba(255,165,0,0.35);border-color:rgba(255,165,0,0.5)}
     .modal-btn-primary{background:rgba(74,144,226,0.4);border-color:rgba(74,144,226,0.5)}
     .modal-code{font-size:26px;font-weight:900;color:#4facfe;letter-spacing:3px;margin:8px 0}
-    
-    /* TOAST */
     .toast{position:fixed;top:20px;right:20px;background:rgba(30,30,60,0.98);backdrop-filter:blur(30px);border-radius:12px;padding:14px 18px;color:#fff;z-index:9998;max-width:320px;animation:fadeIn 0.3s ease-out;font-family:'Inter',sans-serif;box-shadow:0 10px 40px rgba(0,0,0,0.5);border-left:4px solid #4facfe}
     .toast-success{border-left-color:#2ed573}
     .toast-error{border-left-color:#ff4757}
-    
-    @media(max-width:400px){.timer-big{font-size:56px}.big-progress{font-size:42px}.stat-num{font-size:30px}.notif-panel{width:90%;left:5%;right:5%}.modal-box{margin:10px}}
+    @media(max-width:400px){.timer-big{font-size:56px}.big-progress{font-size:42px}.stat-num{font-size:30px}.notif-panel{width:90%;left:5%;right:5%}}
   </style>
 </head>
 <body>
@@ -107,16 +96,6 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const auth = firebase.auth();
-    const messaging = firebase.messaging();
-    // Firebase init के बाद (जहाँ messaging variable बना है उसके नीचे)
-
-// 🔧 SERVICE WORKER PATH FIX - बस ये 3 lines add करो
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/Study-collab/firebase-messaging-sw.js')
-    .then(registration => {
-      messaging.useServiceWorker(registration);
-    });
-}
 
     // ============ STATE ============
     let user=null,page='dashboard',tasks=[],rooms=[],currentRoom=null,roomTasks=[],unsub=null,roomTasksUnsub=null,authMode='login';
@@ -125,7 +104,7 @@ if ('serviceWorker' in navigator) {
 
     function getMyName(){return user?.displayName||user?.email?.split('@')[0]||'User'}
 
-    // ============ CUSTOM MODALS (NO BROWSER POPUPS) ============
+    // ============ CUSTOM MODALS ============
     function showPrompt(title,placeholder,onConfirm){
       const overlay=document.createElement('div');overlay.className='modal-overlay';
       overlay.innerHTML=`<div class="modal-box"><div class="modal-icon">📝</div><div class="modal-title">${title}</div><input id="modal-input" class="input" placeholder="${placeholder}" style="margin:12px 0" autofocus/><div class="modal-buttons"><button class="modal-btn modal-btn-cancel" id="modal-cancel">Cancel</button><button class="modal-btn modal-btn-primary" id="modal-confirm">Create</button></div></div>`;
@@ -161,49 +140,33 @@ if ('serviceWorker' in navigator) {
       setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity 0.3s';setTimeout(()=>t.remove(),300)},3000);
     }
 
-    // ============ NOTIFICATIONS ============
-   async function requestNotificationPermission() {
-  try {
-    const perm = await Notification.requestPermission();
-    if (perm === 'granted') {
-      // Register SW with correct path
-      const reg = await navigator.serviceWorker.register('/Study-collab/firebase-messaging-sw.js');
-      await navigator.serviceWorker.ready;
-      
-      // Get token with service worker registration
-      const token = await messaging.getToken({
-        vapidKey: 'BAp00Omr4ezHvV-Ukp5NipbaklNXsjGdZmuF0n9MywIZsTZqWLspbCrDEVNxckBnbQDvdT0HzhzvNB4VUdJhOZ4',
-        serviceWorkerRegistration: await navigator.serviceWorker.getRegistration()
-      });
-      
-      if (token && user) {
-        await db.collection('fcmTokens').doc(user.uid).set({
-          token, userId: user.uid, userName: getMyName(), updatedAt: Date.now()
-        }, { merge: true });
-      }
-    }
-  } catch (e) {
-    console.log('Notification setup error:', e);
-  }
-   } 
-
-    messaging.onMessage(payload=>{
-      const{title,body}=payload.notification||{};
-      showToast(title||'StudyCollab',body||'','success');
-      loadNotifications();
-    });
-
+    // ============ IN-APP NOTIFICATIONS ============
     function loadNotifications(){
       if(notifUnsub)notifUnsub();
-      notifUnsub=db.collection('notifications').where('userId','==',getMyName()).orderBy('createdAt','desc').limit(20).onSnapshot(s=>{notifications=[];s.forEach(d=>notifications.push({id:d.id,...d.data()}));notifCount=notifications.filter(n=>!n.read).length;render()});
+      notifUnsub=db.collection('notifications')
+        .where('userId','==',getMyName())
+        .orderBy('createdAt','desc')
+        .limit(20)
+        .onSnapshot(s=>{
+          notifications=[];s.forEach(d=>notifications.push({id:d.id,...d.data()}));
+          notifCount=notifications.filter(n=>!n.read).length;
+          render();
+        });
     }
 
     async function createNotification(userName,type,message,roomId){
-      await db.collection('notifications').add({userId:userName,type,message,roomId,read:false,createdAt:Date.now()});
+      await db.collection('notifications').add({
+        userId:userName,type,message,roomId,read:false,createdAt:Date.now()
+      });
     }
 
-    async function markNotifRead(id){await db.collection('notifications').doc(id).update({read:true})}
-    async function markAllNotifRead(){for(const n of notifications){if(!n.read)await db.collection('notifications').doc(n.id).update({read:true})}}
+    async function markNotifRead(id){
+      await db.collection('notifications').doc(id).update({read:true});
+    }
+
+    async function markAllNotifRead(){
+      for(const n of notifications){if(!n.read)await db.collection('notifications').doc(n.id).update({read:true})}
+    }
 
     function toggleNotifPanel(){
       notifPanelOpen=!notifPanelOpen;
@@ -233,7 +196,7 @@ if ('serviceWorker' in navigator) {
         document.getElementById('google-btn').onclick=()=>auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e=>{document.getElementById('auth-msg').textContent=e.message});
         return;
       }
-      app.innerHTML=`<header class="glass" style="margin:14px;display:flex;justify-content:space-between;align-items:center;padding:14px 20px"><span style="font-size:20px;font-weight:800;background:linear-gradient(to right,#4facfe,#00f2fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">📚 StudyCollab</span><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;cursor:pointer" onclick="toggleNotifPanel()"><span style="font-size:20px">🔔</span>${notifCount>0?`<span class="notif-badge">${notifCount}</span>`:''}</div><span style="font-size:13px;opacity:0.7">👋 ${getMyName()}</span><button class="btn" style="padding:6px 14px;font-size:12px" onclick="logout()">Exit</button></div></header><div class="notif-panel" id="notif-panel">${notifications.length===0?'<p style="text-align:center;opacity:0.4;padding:20px">No notifications</p>':notifications.map(n=>`<div class="notif-item" onclick="markNotifRead('${n.id}')"><div>${n.message}</div><div class="notif-time">${getTimeAgo(n.createdAt)}</div></div>`).join('')}</div><main style="padding:0 14px 100px;max-width:550px;margin:0 auto">${getPage()}</main><div class="dock"><button class="dock-item ${page==='dashboard'?'active':''}" onclick="setPage('dashboard')">📊</button><button class="dock-item ${page==='tasks'?'active':''}" onclick="setPage('tasks')">✅</button><button class="dock-item ${page==='timer'?'active':''}" onclick="setPage('timer')">⏱️</button><button class="dock-item ${page==='friends'?'active':''}" onclick="setPage('friends')">👥</button></div>`;
+      app.innerHTML=`<header class="glass" style="margin:14px;display:flex;justify-content:space-between;align-items:center;padding:14px 20px"><span style="font-size:20px;font-weight:800;background:linear-gradient(to right,#4facfe,#00f2fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">📚 StudyCollab</span><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;cursor:pointer" onclick="toggleNotifPanel()"><span style="font-size:20px">🔔</span>${notifCount>0?`<span class="notif-badge">${notifCount}</span>`:''}</div><span style="font-size:13px;opacity:0.7">👋 ${getMyName()}</span><button class="btn" style="padding:6px 14px;font-size:12px" onclick="logout()">Exit</button></div></header><div class="notif-panel" id="notif-panel"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>🔔 Notifications</b>${notifCount>0?`<button class="btn" style="padding:4px 12px;font-size:11px" onclick="markAllNotifRead()">Mark all read</button>`:''}</div>${notifications.length===0?'<p style="text-align:center;opacity:0.4;padding:20px">No notifications yet</p>':notifications.map(n=>`<div class="notif-item" style="${!n.read?'border-left:3px solid #4facfe;':''}" onclick="markNotifRead('${n.id}')"><div style="font-weight:${n.read?'400':'600'}">${n.message}</div><div class="notif-time">${getTimeAgo(n.createdAt)}</div></div>`).join('')}</div><main style="padding:0 14px 100px;max-width:550px;margin:0 auto">${getPage()}</main><div class="dock"><button class="dock-item ${page==='dashboard'?'active':''}" onclick="setPage('dashboard')">📊</button><button class="dock-item ${page==='tasks'?'active':''}" onclick="setPage('tasks')">✅</button><button class="dock-item ${page==='timer'?'active':''}" onclick="setPage('timer')">⏱️</button><button class="dock-item ${page==='friends'?'active':''}" onclick="setPage('friends')">👥</button></div>`;
       setupListeners();
     }
 
@@ -259,27 +222,31 @@ if ('serviceWorker' in navigator) {
 
     // ============ ROOMS ============
     async function createRoom(){showPrompt('Create New Room','Enter room name...',async(name)=>{const code=Math.random().toString(36).substring(2,8).toUpperCase();const myName=getMyName();const doc=await db.collection('rooms').add({name,code,members:[myName],createdBy:myName,createdAt:Date.now()});currentRoom={id:doc.id,name,code,members:[myName]};showAlert('Room Created! 🎉',`Share this code with friends:<br><div class="modal-code">${code}</div>`,'🏠','OK');loadRoomData()})}
-
-    async function joinRoom(){const code=document.getElementById('code-inp')?.value?.trim().toUpperCase();if(!code){showToast('Oops!','Please enter invite code','error');return}const snap=await db.collection('rooms').where('code','==',code).get();if(snap.empty){showAlert('Not Found','No room with this code. Check again!','🔍');return}const doc=snap.docs[0],data=doc.data();const myName=getMyName();if(!data.members.includes(myName)){data.members.push(myName);await db.collection('rooms').doc(doc.id).update({members:data.members})}currentRoom={id:doc.id,...data,members:data.members};showToast('Success!',`Joined: ${data.name}`,'success');loadRoomData()}
-
+    async function joinRoom(){const code=document.getElementById('code-inp')?.value?.trim().toUpperCase();if(!code){showToast('Oops!','Please enter invite code','error');return}const snap=await db.collection('rooms').where('code','==',code).get();if(snap.empty){showAlert('Not Found','No room with this code.','🔍');return}const doc=snap.docs[0],data=doc.data();const myName=getMyName();if(!data.members.includes(myName)){data.members.push(myName);await db.collection('rooms').doc(doc.id).update({members:data.members})}currentRoom={id:doc.id,...data,members:data.members};showToast('Success!',`Joined: ${data.name}`,'success');loadRoomData()}
     async function enterRoom(id){const doc=await db.collection('rooms').doc(id).get();if(doc.exists){currentRoom={id:doc.id,...doc.data()};loadRoomData()}}
-
-    async function leaveRoom(){if(!currentRoom)return;showConfirm('Leave Room?','Are you sure? You can rejoin with the invite code.','🚪',async()=>{const myName=getMyName();const members=currentRoom.members.filter(m=>m!==myName);await db.collection('rooms').doc(currentRoom.id).update({members});if(roomTasksUnsub)roomTasksUnsub();currentRoom=null;roomTasks=[];render()},'Leave','modal-btn-leave')}
-
+    async function leaveRoom(){if(!currentRoom)return;showConfirm('Leave Room?','Are you sure?','🚪',async()=>{const myName=getMyName();const members=currentRoom.members.filter(m=>m!==myName);await db.collection('rooms').doc(currentRoom.id).update({members});if(roomTasksUnsub)roomTasksUnsub();currentRoom=null;roomTasks=[];render()},'Leave','modal-btn-leave')}
     async function addRoomTask(){if(!currentRoom)return;const inp=document.getElementById('rt-inp');if(!inp||!inp.value.trim())return;const title=inp.value.trim();const mems=currentRoom.members||[];const comps={};mems.forEach(m=>comps[m]=false);await db.collection('roomTasks').add({roomId:currentRoom.id,title,createdBy:getMyName(),completions:comps,createdAt:Date.now()});inp.value='';showToast('Task Added',title,'success')}
 
     async function toggleRoomTask(taskId){
       const t=roomTasks.find(x=>x.id===taskId);if(!t)return;
       const m=getMyName();const comps=t.completions||{};comps[m]=!comps[m];
       await db.collection('roomTasks').doc(taskId).update({completions:comps});
+      
+      // IN-APP NOTIFICATION
       if(comps[m]){
         const others=(currentRoom.members||[]).filter(x=>x!==m);
-        for(const o of others) await createNotification(o,'task_done',`✅ ${m} completed "${t.title}"`,currentRoom.id);
-        if(checkAllDone()) for(const mem of(currentRoom.members||[])) await createNotification(mem,'all_done',`🎉 All tasks done in "${currentRoom.name}"!`,currentRoom.id);
+        for(const o of others){
+          await createNotification(o,'task_done',`✅ ${m} completed "${t.title}"`,currentRoom.id);
+        }
+        if(checkAllDone()){
+          for(const mem of(currentRoom.members||[])){
+            await createNotification(mem,'all_done',`🎉 All tasks done in "${currentRoom.name}"!`,currentRoom.id);
+          }
+        }
       }
     }
 
-    async function deleteRoomTask(taskId){showConfirm('Delete Task?','This will permanently remove the task for <b>all members</b>.','🗑️',async()=>{await db.collection('roomTasks').doc(taskId).delete();showToast('Deleted','Task removed','success')},'Delete','modal-btn-delete')}
+    async function deleteRoomTask(taskId){showConfirm('Delete Task?','Remove for everyone?','🗑️',async()=>{await db.collection('roomTasks').doc(taskId).delete();showToast('Deleted','Task removed','success')},'Delete','modal-btn-delete')}
 
     // ============ NAVIGATION ============
     function setPage(p){page=p;if(p==='friends'&&currentRoom)loadRoomData();render()}
@@ -294,7 +261,7 @@ if ('serviceWorker' in navigator) {
     function setTimerMode(m){tm=m;resetTimer();document.getElementById('mode-cd').style.background=m==='countdown'?'rgba(255,255,255,0.15)':'transparent';document.getElementById('mode-sw').style.background=m==='stopwatch'?'rgba(255,255,255,0.15)':'transparent'}
 
     // ============ INIT ============
-    auth.onAuthStateChanged(u=>{if(u){user=u;loadData();loadNotifications();requestNotificationPermission()}else{user=null;render()}});
+    auth.onAuthStateChanged(u=>{if(u){user=u;loadData();loadNotifications()}else{user=null;render()}});
   </script>
 </body>
 </html>
