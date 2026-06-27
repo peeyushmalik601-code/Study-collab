@@ -162,15 +162,30 @@ if ('serviceWorker' in navigator) {
     }
 
     // ============ NOTIFICATIONS ============
-    async function requestNotificationPermission(){
-      try{
-        const perm=await Notification.requestPermission();
-        if(perm==='granted'){
-          const token=await messaging.getToken({vapidKey:'BAp00Omr4ezHvV-Ukp5NipbaklNXsjGdZmuF0n9MywIZsTZqWLspbCrDEVNxckBnbQDvdT0HzhzvNB4VUdJhOZ4'});
-          if(user) await db.collection('fcmTokens').doc(user.uid).set({token,userId:user.uid,userName:getMyName(),updatedAt:Date.now()},{merge:true});
-        }
-      }catch(e){console.log('Notification denied')}
+   async function requestNotificationPermission() {
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm === 'granted') {
+      // Register SW with correct path
+      const reg = await navigator.serviceWorker.register('/Study-collab/firebase-messaging-sw.js');
+      await navigator.serviceWorker.ready;
+      
+      // Get token with service worker registration
+      const token = await messaging.getToken({
+        vapidKey: 'BAp00Omr4ezHvV-Ukp5NipbaklNXsjGdZmuF0n9MywIZsTZqWLspbCrDEVNxckBnbQDvdT0HzhzvNB4VUdJhOZ4',
+        serviceWorkerRegistration: await navigator.serviceWorker.getRegistration()
+      });
+      
+      if (token && user) {
+        await db.collection('fcmTokens').doc(user.uid).set({
+          token, userId: user.uid, userName: getMyName(), updatedAt: Date.now()
+        }, { merge: true });
+      }
     }
+  } catch (e) {
+    console.log('Notification setup error:', e);
+  }
+   } 
 
     messaging.onMessage(payload=>{
       const{title,body}=payload.notification||{};
