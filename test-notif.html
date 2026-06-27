@@ -28,42 +28,43 @@
       r.innerHTML += `1. Permission: <b>${perm}</b><br>`;
       if (perm !== 'granted') { r.innerHTML += '❌ Permission denied!<br>'; return; }
       
-      // Step 2: Register SW with CORRECT path
+      // Step 2: Register SW with CORRECT path (BEFORE getToken)
       try {
         const reg = await navigator.serviceWorker.register('/Study-collab/firebase-messaging-sw.js');
-        messaging.useServiceWorker(reg);
         r.innerHTML += '2. SW Registered: ✅<br>';
+        
+        // Wait for SW to be ready
+        await navigator.serviceWorker.ready;
+        r.innerHTML += '3. SW Ready: ✅<br>';
       } catch(e) {
         r.innerHTML += `2. SW Error: ${e.message}<br>`;
         return;
       }
       
-      // Step 3: Get Token
+      // Step 4: Get Token
       try {
         const token = await messaging.getToken({ 
-          vapidKey: 'BAp00Omr4ezHvV-Ukp5NipbaklNXsjGdZmuF0n9MywIZsTZqWLspbCrDEVNxckBnbQDvdT0HzhzvNB4VUdJhOZ4' 
+          vapidKey: 'BAp00Omr4ezHvV-Ukp5NipbaklNXsjGdZmuF0n9MywIZsTZqWLspbCrDEVNxckBnbQDvdT0HzhzvNB4VUdJhOZ4',
+          serviceWorkerRegistration: await navigator.serviceWorker.getRegistration()
         });
         if (token) {
-          r.innerHTML += '3. Token: ✅ Got it!<br>';
-          r.innerHTML += `<span style="font-size:10px;word-break:break-all;">${token.substring(0,50)}...</span><br>`;
+          r.innerHTML += '4. Token: ✅ Got it!<br>';
         } else {
-          r.innerHTML += '3. Token: ❌ No token<br>';
+          r.innerHTML += '4. Token: ❌ No token<br>';
         }
       } catch(e) {
-        r.innerHTML += `3. Token Error: ${e.message}<br>`;
+        r.innerHTML += `4. Token Error: ${e.message}<br>`;
         return;
       }
       
-      // Step 4: Test notification
-      if (Notification.permission === 'granted') {
-        new Notification('Test Success! 🔔', { 
-          body: 'Notification is working perfectly!', 
-          icon: 'logo.png',
-          vibrate: [200, 100, 200]
-        });
-        r.innerHTML += '4. Test notification sent! ✅<br>';
-        r.innerHTML += '<br><b style="color:#2ed573;">🎉 Everything is working!</b>';
-      }
+      // Step 5: Test notification
+      new Notification('Test Success! 🔔', { 
+        body: 'Notification is working perfectly!', 
+        icon: 'logo.png',
+        vibrate: [200, 100, 200]
+      });
+      r.innerHTML += '5. Test notification sent! ✅<br>';
+      r.innerHTML += '<br><b style="color:#2ed573;">🎉 Everything is working!</b>';
     }
   </script>
 </body>
