@@ -28,11 +28,13 @@
     .btn:hover{background:rgba(255,255,255,0.2);transform:scale(1.03)}
     .btn:active{transform:scale(0.96)}
     .btn-primary{background:rgba(74,144,226,0.4);border-color:rgba(74,144,226,0.5)}
+    .btn-danger{background:rgba(255,71,87,0.4);border-color:rgba(255,71,87,0.5)}
+    .btn-warning{background:rgba(255,165,0,0.4);border-color:rgba(255,165,0,0.5)}
     .input{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:14px 18px;color:#fff;outline:none;width:100%;font-size:15px;font-family:'Inter',sans-serif;transition:all 0.3s ease}
     .input::placeholder{color:rgba(255,255,255,0.35)}
     .input:focus{border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.13)}
-    .dock{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.07);backdrop-filter:blur(35px);border:1px solid rgba(255,255,255,0.18);border-radius:50px;padding:6px 14px;display:flex;gap:6px;z-index:1000;box-shadow:0 12px 48px rgba(0,0,0,0.5)}
-    .dock-item{width:46px;height:46px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:21px;border:none;background:transparent;color:rgba(255,255,255,0.55);transition:all 0.2s}
+    .dock{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.07);backdrop-filter:blur(35px);border:1px solid rgba(255,255,255,0.18);border-radius:50px;padding:6px 10px;display:flex;gap:4px;z-index:1000;box-shadow:0 12px 48px rgba(0,0,0,0.5)}
+    .dock-item{width:42px;height:42px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;border:none;background:transparent;color:rgba(255,255,255,0.55);transition:all 0.2s}
     .dock-item.active{background:rgba(255,255,255,0.22);color:#fff;transform:scale(1.12)}
     .checkbox{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,0.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.2s;background:transparent;color:white}
     .checkbox.done{border-color:#2ed573;background:#2ed573}
@@ -61,7 +63,7 @@
     .notif-item{padding:12px;border-radius:12px;margin-bottom:6px;background:rgba(255,255,255,0.04);font-size:13px;transition:all 0.2s}
     .notif-item:hover{background:rgba(255,255,255,0.1)}
     .notif-time{font-size:10px;opacity:0.5;margin-top:4px}
-    .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;animation:fadeIn 0.2s ease-out}
+    .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;animation:fadeIn 0.2s ease-out}
     .modal-box{background:rgba(30,30,60,0.98);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.15);border-radius:24px;padding:28px;max-width:360px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
     .modal-icon{font-size:48px;margin-bottom:12px}
     .modal-title{font-size:20px;font-weight:700;margin-bottom:8px}
@@ -70,21 +72,23 @@
     .modal-btn{flex:1;padding:12px 20px;border-radius:50px;border:1px solid rgba(255,255,255,0.2);font-weight:600;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;color:#fff;background:transparent}
     .modal-btn:hover{transform:scale(1.03)}
     .modal-btn-cancel{background:rgba(255,255,255,0.06)}
-    .modal-btn-delete{background:rgba(255,71,87,0.35);border-color:rgba(255,71,87,0.5)}
-    .modal-btn-leave{background:rgba(255,165,0,0.35);border-color:rgba(255,165,0,0.5)}
-    .modal-btn-primary{background:rgba(74,144,226,0.4);border-color:rgba(74,144,226,0.5)}
+    .modal-btn-delete{background:rgba(255,71,87,0.35)}
+    .modal-btn-leave{background:rgba(255,165,0,0.35)}
+    .modal-btn-primary{background:rgba(74,144,226,0.4)}
     .modal-code{font-size:26px;font-weight:900;color:#4facfe;letter-spacing:3px;margin:8px 0}
     .toast{position:fixed;top:20px;right:20px;background:rgba(30,30,60,0.98);backdrop-filter:blur(30px);border-radius:12px;padding:14px 18px;color:#fff;z-index:9998;max-width:320px;animation:fadeIn 0.3s ease-out;font-family:'Inter',sans-serif;box-shadow:0 10px 40px rgba(0,0,0,0.5);border-left:4px solid #4facfe}
     .toast-success{border-left-color:#2ed573}
     .toast-error{border-left-color:#ff4757}
-    @media(max-width:400px){.timer-big{font-size:56px}.big-progress{font-size:42px}.stat-num{font-size:30px}.notif-panel{width:90%;left:5%;right:5%}}
+    .admin-card{cursor:pointer;transition:all 0.2s}
+    .admin-card:hover{background:rgba(255,255,255,0.1)!important}
+    @media(max-width:400px){.timer-big{font-size:56px}.big-progress{font-size:42px}.stat-num{font-size:30px}.notif-panel{width:90%;left:5%;right:5%}.dock-item{width:36px;height:36px;font-size:16px}}
   </style>
 </head>
 <body>
   <div id="app"></div>
 
   <script>
-    // ============ FIREBASE INIT ============
+    // FIREBASE INIT
     const firebaseConfig = {
       apiKey: "AIzaSyDo2oJO2M2EiDKvvBpY2N7b8MZ38WeO5G4",
       authDomain: "study-8820a.firebaseapp.com",
@@ -97,25 +101,29 @@
     const db = firebase.firestore();
     const auth = firebase.auth();
 
-    // ============ STATE ============
+    // ADMIN CONFIG
+    const ADMIN_EMAIL = "peeyushmalik601@gmail.com"; // 👈 अपनी email डालो
+
+    // STATE
     let user=null,page='dashboard',tasks=[],rooms=[],currentRoom=null,roomTasks=[],unsub=null,roomTasksUnsub=null,authMode='login';
     let notifications=[],notifUnsub=null,notifCount=0,notifPanelOpen=false;
+    let allUsers=[],allRooms=[],adminStats={users:0,rooms:0,tasks:0,completed:0};
     let ts=1500,tr=false,tm='countdown',ti=null;
 
     function getMyName(){return user?.displayName||user?.email?.split('@')[0]||'User'}
+    function isAdmin(){return user?.email===ADMIN_EMAIL}
 
-    // ============ CUSTOM MODALS ============
+    // MODALS
     function showPrompt(title,placeholder,onConfirm){
       const overlay=document.createElement('div');overlay.className='modal-overlay';
       overlay.innerHTML=`<div class="modal-box"><div class="modal-icon">📝</div><div class="modal-title">${title}</div><input id="modal-input" class="input" placeholder="${placeholder}" style="margin:12px 0" autofocus/><div class="modal-buttons"><button class="modal-btn modal-btn-cancel" id="modal-cancel">Cancel</button><button class="modal-btn modal-btn-primary" id="modal-confirm">Create</button></div></div>`;
       document.body.appendChild(overlay);
       const inp=document.getElementById('modal-input');setTimeout(()=>inp.focus(),100);
       document.getElementById('modal-cancel').onclick=()=>overlay.remove();
-      document.getElementById('modal-confirm').onclick=()=>{const v=inp.value.trim();if(v){overlay.remove();onConfirm(v)}else{inp.style.borderColor='rgba(255,71,87,0.5)'}};
+      document.getElementById('modal-confirm').onclick=()=>{const v=inp.value.trim();if(v){overlay.remove();onConfirm(v)}};
       inp.addEventListener('keypress',e=>{if(e.key==='Enter')document.getElementById('modal-confirm').click()});
       overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove()});
     }
-
     function showAlert(title,message,icon,btnText,onClose){
       const overlay=document.createElement('div');overlay.className='modal-overlay';
       overlay.innerHTML=`<div class="modal-box"><div class="modal-icon">${icon||'✅'}</div><div class="modal-title">${title}</div><div class="modal-text">${message}</div><button class="btn btn-primary" style="width:100%" id="modal-ok">${btnText||'OK'}</button></div>`;
@@ -123,7 +131,6 @@
       document.getElementById('modal-ok').onclick=()=>{overlay.remove();if(onClose)onClose()};
       overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove()});
     }
-
     function showConfirm(title,message,icon,onConfirm,confirmText,confirmClass){
       const overlay=document.createElement('div');overlay.className='modal-overlay';
       overlay.innerHTML=`<div class="modal-box"><div class="modal-icon">${icon||'🗑️'}</div><div class="modal-title">${title}</div><div class="modal-text">${message}</div><div class="modal-buttons"><button class="modal-btn modal-btn-cancel" id="modal-cancel">Cancel</button><button class="modal-btn ${confirmClass||'modal-btn-delete'}" id="modal-confirm">${confirmText||'Delete'}</button></div></div>`;
@@ -132,7 +139,6 @@
       document.getElementById('modal-confirm').onclick=()=>{overlay.remove();onConfirm()};
       overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove()});
     }
-
     function showToast(title,message,type='info'){
       const t=document.createElement('div');t.className=`toast toast-${type}`;
       t.innerHTML=`<b>${title}</b><br><span style="font-size:12px;opacity:0.7">${message}</span>`;
@@ -140,72 +146,57 @@
       setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity 0.3s';setTimeout(()=>t.remove(),300)},3000);
     }
 
-    // ============ IN-APP NOTIFICATIONS ============
-   function loadNotifications(){
-  if(notifUnsub) notifUnsub();
+    // NOTIFICATIONS
+    function loadNotifications(){
+      if(notifUnsub)notifUnsub();
+      notifUnsub=db.collection('notifications').where('userId','==',getMyName()).orderBy('createdAt','desc').limit(20).onSnapshot(s=>{notifications=[];s.forEach(d=>notifications.push({id:d.id,...d.data()}));notifCount=notifications.filter(n=>!n.read).length;render();});
+    }
+    async function createNotification(userName,type,message,roomId){await db.collection('notifications').add({userId:userName,type,message,roomId,read:false,createdAt:Date.now()});}
+    async function markNotifRead(id){await db.collection('notifications').doc(id).update({read:true});}
+    async function markAllNotifRead(){for(const n of notifications){if(!n.read)await db.collection('notifications').doc(n.id).update({read:true});}}
+    function toggleNotifPanel(){notifPanelOpen=!notifPanelOpen;const p=document.getElementById('notif-panel');if(p)p.style.display=notifPanelOpen?'block':'none';if(!notifPanelOpen)markAllNotifRead();}
+    function getTimeAgo(ts){const s=Math.floor((Date.now()-ts)/1000);if(s<60)return'Just now';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago';}
+    function checkAllDone(){if(!currentRoom||!roomTasks.length)return false;for(const m of(currentRoom.members||[])){if(roomTasks.filter(t=>t.completions&&t.completions[m]).length<roomTasks.length)return false}return true;}
 
-  notifUnsub = db.collection('notifications')
-    .where('userId','==',getMyName())
-    .orderBy('createdAt','desc')
-    .limit(20)
-    .onSnapshot(
-      s=>{
-        notifications=[];
-        s.forEach(d=>notifications.push({id:d.id,...d.data()}));
-        notifCount=notifications.filter(n=>!n.read).length;
-        render();
-      },
-      err=>{
-        console.error("Notification Error:",err);
-        showToast("Notification Error",err.message,"error");
+    // ADMIN DATA
+    async function loadAdminData(){
+      const usersSnap=await db.collection('users').get();
+      allUsers=[];usersSnap.forEach(d=>allUsers.push({id:d.id,...d.data()}));
+      const roomsSnap=await db.collection('rooms').get();
+      allRooms=[];roomsSnap.forEach(d=>allRooms.push({id:d.id,...d.data()}));
+      let totalTasks=0,completedTasks=0;
+      for(const r of allRooms){
+        const tasksSnap=await db.collection('roomTasks').where('roomId','==',r.id).get();
+        totalTasks+=tasksSnap.size;
+        tasksSnap.forEach(t=>{const data=t.data();if(data.completions){for(const m of(r.members||[])){if(data.completions[m])completedTasks++}}});
       }
-    );
-   } 
-
-    async function createNotification(userName,type,message,roomId){
-      await db.collection('notifications').add({
-        userId:userName,type,message,roomId,read:false,createdAt:Date.now()
-      });
+      adminStats={users:allUsers.length,rooms:allRooms.length,tasks:totalTasks,completed:completedTasks};
+      render();
     }
 
-    async function markNotifRead(id){
-      await db.collection('notifications').doc(id).update({read:true});
-    }
-
-    async function markAllNotifRead(){
-      for(const n of notifications){if(!n.read)await db.collection('notifications').doc(n.id).update({read:true})}
-    }
-
-    function toggleNotifPanel(){
-      notifPanelOpen=!notifPanelOpen;
-      const p=document.getElementById('notif-panel');
-      if(p)p.style.display=notifPanelOpen?'block':'none';
-      if(!notifPanelOpen)markAllNotifRead();
-    }
-
-    function getTimeAgo(ts){
-      const s=Math.floor((Date.now()-ts)/1000);
-      if(s<60)return'Just now';if(s<3600)return Math.floor(s/60)+'m ago';
-      if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago';
-    }
-
-    function checkAllDone(){
-      if(!currentRoom||!roomTasks.length)return false;
-      for(const m of(currentRoom.members||[])){if(roomTasks.filter(t=>t.completions&&t.completions[m]).length<roomTasks.length)return false}
-      return true;
-    }
-
-    // ============ RENDER ============
+    // RENDER
     function render(){
       const app=document.getElementById('app');
       if(!user){
         app.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px"><div class="glass fade-in" style="max-width:400px;width:100%;text-align:center"><div style="font-size:50px">📚</div><h1 style="font-size:34px;font-weight:900;background:linear-gradient(to right,#4facfe,#00f2fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">StudyCollab</h1><p style="opacity:0.5;margin:8px 0 20px">Study Together • Live Sync</p><div class="tabs"><button class="tab ${authMode==='login'?'active':''}" onclick="authMode='login';render()">Login</button><button class="tab ${authMode==='signup'?'active':''}" onclick="authMode='signup';render()">Sign Up</button></div>${authMode==='signup'?'<input id="aname" class="input" placeholder="Full Name" style="margin-bottom:8px"/>':''}<input id="aemail" class="input" placeholder="Email" style="margin-bottom:8px" type="email"/><input id="apass" class="input" placeholder="Password" style="margin-bottom:8px" type="password"/><button id="auth-btn" class="btn btn-primary" style="width:100%">${authMode==='login'?'🔐 Login':'📝 Sign Up'}</button><div style="opacity:0.3;margin:12px 0">— or —</div><button id="google-btn" class="btn" style="width:100%">G &nbsp; Continue with Google</button><p style="font-size:12px;opacity:0.4;margin-top:12px" id="auth-msg"></p></div></div>`;
-        document.getElementById('auth-btn').onclick=()=>{const e=document.getElementById('aemail').value,p=document.getElementById('apass').value,m=document.getElementById('auth-msg');if(!e||!p){showToast('Error','Please fill all fields','error');return}m.textContent='Loading...';if(authMode==='signup'){const n=document.getElementById('aname')?.value||e.split('@')[0];auth.createUserWithEmailAndPassword(e,p).then(r=>r.user.updateProfile({displayName:n})).catch(err=>{m.textContent=err.message})}else{auth.signInWithEmailAndPassword(e,p).catch(err=>{m.textContent=err.message})}};
-        document.getElementById('google-btn').onclick=()=>auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e=>{document.getElementById('auth-msg').textContent=e.message});
+        document.getElementById('auth-btn').onclick=()=>{const e=document.getElementById('aemail').value,p=document.getElementById('apass').value,m=document.getElementById('auth-msg');if(!e||!p){showToast('Error','Please fill all fields','error');return}m.textContent='Loading...';if(authMode==='signup'){const n=document.getElementById('aname')?.value||e.split('@')[0];auth.createUserWithEmailAndPassword(e,p).then(r=>{r.user.updateProfile({displayName:n});db.collection('users').doc(r.user.uid).set({name:n,email:e,createdAt:Date.now()})}).catch(err=>{m.textContent=err.message})}else{auth.signInWithEmailAndPassword(e,p).catch(err=>{m.textContent=err.message})}};
+        document.getElementById('google-btn').onclick=()=>{const p=new firebase.auth.GoogleAuthProvider();auth.signInWithPopup(p).then(r=>{db.collection('users').doc(r.user.uid).set({name:r.user.displayName,email:r.user.email,createdAt:Date.now()},{merge:true})}).catch(e=>{document.getElementById('auth-msg').textContent=e.message})};
         return;
       }
-      app.innerHTML=`<header class="glass" style="margin:14px;display:flex;justify-content:space-between;align-items:center;padding:14px 20px"><span style="font-size:20px;font-weight:800;background:linear-gradient(to right,#4facfe,#00f2fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">📚 StudyCollab</span><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;cursor:pointer" onclick="toggleNotifPanel()"><span style="font-size:20px">🔔</span>${notifCount>0?`<span class="notif-badge">${notifCount}</span>`:''}</div><span style="font-size:13px;opacity:0.7">👋 ${getMyName()}</span><button class="btn" style="padding:6px 14px;font-size:12px" onclick="logout()">Exit</button></div></header><div class="notif-panel" id="notif-panel" style="display:${notifPanelOpen ? 'block' : 'none'}"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>🔔 Notifications</b>${notifCount>0?`<button class="btn" style="padding:4px 12px;font-size:11px" onclick="markAllNotifRead()">Mark all read</button>`:''}</div>${notifications.length===0?'<p style="text-align:center;opacity:0.4;padding:20px">No notifications yet</p>':notifications.map(n=>`<div class="notif-item" style="${!n.read?'border-left:3px solid #4facfe;':''}" onclick="markNotifRead('${n.id}')"><div style="font-weight:${n.read?'400':'600'}">${n.message}</div><div class="notif-time">${getTimeAgo(n.createdAt)}</div></div>`).join('')}</div><main style="padding:0 14px 100px;max-width:550px;margin:0 auto">${getPage()}</main><div class="dock"><button class="dock-item ${page==='dashboard'?'active':''}" onclick="setPage('dashboard')">📊</button><button class="dock-item ${page==='tasks'?'active':''}" onclick="setPage('tasks')">✅</button><button class="dock-item ${page==='timer'?'active':''}" onclick="setPage('timer')">⏱️</button><button class="dock-item ${page==='friends'?'active':''}" onclick="setPage('friends')">👥</button></div>`;
+      if(page==='admin'){
+        app.innerHTML=`<header class="glass" style="margin:14px;display:flex;justify-content:space-between;align-items:center;padding:14px 20px"><span style="font-size:20px;font-weight:800;background:linear-gradient(to right,#ffa502,#ff4757);-webkit-background-clip:text;-webkit-text-fill-color:transparent">👑 Admin Panel</span><div style="display:flex;align-items:center;gap:12px"><span style="font-size:13px;opacity:0.7">👋 ${getMyName()}</span><button class="btn" style="padding:6px 14px;font-size:12px" onclick="page='dashboard';render()">Back</button><button class="btn" style="padding:6px 14px;font-size:12px" onclick="logout()">Exit</button></div></header><main style="padding:0 14px 100px;max-width:600px;margin:0 auto">${renderAdmin()}</main>`;
+        return;
+      }
+      app.innerHTML=`<header class="glass" style="margin:14px;display:flex;justify-content:space-between;align-items:center;padding:14px 20px"><span style="font-size:20px;font-weight:800;background:linear-gradient(to right,#4facfe,#00f2fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">📚 StudyCollab</span><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;cursor:pointer" onclick="toggleNotifPanel()"><span style="font-size:20px">🔔</span>${notifCount>0?`<span class="notif-badge">${notifCount}</span>`:''}</div><span style="font-size:13px;opacity:0.7">👋 ${getMyName()}</span><button class="btn" style="padding:6px 14px;font-size:12px" onclick="logout()">Exit</button></div></header><div class="notif-panel" id="notif-panel"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>🔔 Notifications</b>${notifCount>0?`<button class="btn" style="padding:4px 12px;font-size:11px" onclick="markAllNotifRead()">Mark all read</button>`:''}</div>${notifications.length===0?'<p style="text-align:center;opacity:0.4;padding:20px">No notifications yet</p>':notifications.map(n=>`<div class="notif-item" style="${!n.read?'border-left:3px solid #4facfe;':''}" onclick="markNotifRead('${n.id}')"><div style="font-weight:${n.read?'400':'600'}">${n.message}</div><div class="notif-time">${getTimeAgo(n.createdAt)}</div></div>`).join('')}</div><main style="padding:0 14px 100px;max-width:550px;margin:0 auto">${getPage()}</main><div class="dock">${isAdmin()?'<button class="dock-item" onclick="page=\'admin\';loadAdminData()" title="Admin">👑</button>':''}<button class="dock-item ${page==='dashboard'?'active':''}" onclick="setPage('dashboard')">📊</button><button class="dock-item ${page==='tasks'?'active':''}" onclick="setPage('tasks')">✅</button><button class="dock-item ${page==='timer'?'active':''}" onclick="setPage('timer')">⏱️</button><button class="dock-item ${page==='friends'?'active':''}" onclick="setPage('friends')">👥</button></div>`;
       setupListeners();
+    }
+
+    function renderAdmin(){
+      return`<div class="fade-in" style="display:flex;flex-direction:column;gap:12px">
+        <div class="glass"><h2 style="font-weight:700;margin-bottom:8px">📊 Platform Stats</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div style="text-align:center;padding:12px;background:rgba(255,255,255,0.04);border-radius:14px"><div style="font-size:28px;font-weight:900">${adminStats.users}</div><div style="font-size:11px;opacity:0.5">Total Users</div></div><div style="text-align:center;padding:12px;background:rgba(255,255,255,0.04);border-radius:14px"><div style="font-size:28px;font-weight:900">${adminStats.rooms}</div><div style="font-size:11px;opacity:0.5">Total Rooms</div></div><div style="text-align:center;padding:12px;background:rgba(255,255,255,0.04);border-radius:14px"><div style="font-size:28px;font-weight:900">${adminStats.tasks}</div><div style="font-size:11px;opacity:0.5">Total Tasks</div></div><div style="text-align:center;padding:12px;background:rgba(255,255,255,0.04);border-radius:14px"><div style="font-size:28px;font-weight:900;color:#2ed573">${adminStats.completed}</div><div style="font-size:11px;opacity:0.5">Completed</div></div></div></div>
+        <div class="glass"><h3 style="font-weight:700;margin-bottom:10px">👥 Users (${allUsers.length})</h3>${allUsers.map(u=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(255,255,255,0.03);border-radius:12px;margin-bottom:6px"><div><b>${u.name||'Unknown'}</b><br><span style="font-size:11px;opacity:0.5">${u.email||''}</span></div><button class="btn btn-danger" style="padding:6px 14px;font-size:11px" onclick="deleteUser('${u.id}')">🗑️</button></div>`).join('')||'<p style="opacity:0.4">No users</p>'}</div>
+        <div class="glass"><h3 style="font-weight:700;margin-bottom:10px">🏠 Rooms (${allRooms.length})</h3>${allRooms.map(r=>`<div style="padding:12px;background:rgba(255,255,255,0.03);border-radius:12px;margin-bottom:8px"><div style="display:flex;justify-content:space-between;align-items:center"><b>${r.name}</b><button class="btn btn-danger" style="padding:6px 14px;font-size:11px" onclick="deleteRoom('${r.id}')">🗑️ Delete</button></div><div style="font-size:11px;opacity:0.5;margin-top:4px">Code: ${r.code} | Members: ${(r.members||[]).length} | Created by: ${r.createdBy||'Unknown'}</div></div>`).join('')||'<p style="opacity:0.4">No rooms</p>'}</div>
+      </div>`;
     }
 
     function getPage(){
@@ -219,56 +210,34 @@
       }
     }
 
-    // ============ DATA ============
     function loadData(){if(unsub)unsub();unsub=db.collection('tasks').where('userId','==',user.uid).onSnapshot(s=>{tasks=[];s.forEach(d=>tasks.push({id:d.id,...d.data()}));tasks.sort((a,b)=>b.createdAt-a.createdAt);db.collection('rooms').onSnapshot(rs=>{rooms=[];rs.forEach(d=>{const data=d.data();if(data.members&&data.members.includes(getMyName()))rooms.push({id:d.id,...data})});if(currentRoom)loadRoomData();else render()})})}
     function loadRoomData(){if(!currentRoom)return;if(roomTasksUnsub)roomTasksUnsub();roomTasksUnsub=db.collection('roomTasks').where('roomId','==',currentRoom.id).onSnapshot(s=>{roomTasks=[];s.forEach(d=>roomTasks.push({id:d.id,...d.data()}));render()});db.collection('rooms').doc(currentRoom.id).onSnapshot(doc=>{if(doc.exists)currentRoom={id:doc.id,...doc.data()};else{currentRoom=null;if(roomTasksUnsub)roomTasksUnsub()}render()})}
 
-    // ============ TASKS ============
     async function addTask(){const i=document.getElementById('task-inp'),p=document.getElementById('task-pri');if(!i.value.trim())return;await db.collection('tasks').add({userId:user.uid,title:i.value.trim(),priority:p.value,completed:false,createdAt:Date.now()});i.value=''}
     async function toggleTask(id){const t=tasks.find(x=>x.id===id);if(t)await db.collection('tasks').doc(id).update({completed:!t.completed})}
     async function deleteTask(id){await db.collection('tasks').doc(id).delete()}
-
-    // ============ ROOMS ============
     async function createRoom(){showPrompt('Create New Room','Enter room name...',async(name)=>{const code=Math.random().toString(36).substring(2,8).toUpperCase();const myName=getMyName();const doc=await db.collection('rooms').add({name,code,members:[myName],createdBy:myName,createdAt:Date.now()});currentRoom={id:doc.id,name,code,members:[myName]};showAlert('Room Created! 🎉',`Share this code with friends:<br><div class="modal-code">${code}</div>`,'🏠','OK');loadRoomData()})}
     async function joinRoom(){const code=document.getElementById('code-inp')?.value?.trim().toUpperCase();if(!code){showToast('Oops!','Please enter invite code','error');return}const snap=await db.collection('rooms').where('code','==',code).get();if(snap.empty){showAlert('Not Found','No room with this code.','🔍');return}const doc=snap.docs[0],data=doc.data();const myName=getMyName();if(!data.members.includes(myName)){data.members.push(myName);await db.collection('rooms').doc(doc.id).update({members:data.members})}currentRoom={id:doc.id,...data,members:data.members};showToast('Success!',`Joined: ${data.name}`,'success');loadRoomData()}
     async function enterRoom(id){const doc=await db.collection('rooms').doc(id).get();if(doc.exists){currentRoom={id:doc.id,...doc.data()};loadRoomData()}}
     async function leaveRoom(){if(!currentRoom)return;showConfirm('Leave Room?','Are you sure?','🚪',async()=>{const myName=getMyName();const members=currentRoom.members.filter(m=>m!==myName);await db.collection('rooms').doc(currentRoom.id).update({members});if(roomTasksUnsub)roomTasksUnsub();currentRoom=null;roomTasks=[];render()},'Leave','modal-btn-leave')}
     async function addRoomTask(){if(!currentRoom)return;const inp=document.getElementById('rt-inp');if(!inp||!inp.value.trim())return;const title=inp.value.trim();const mems=currentRoom.members||[];const comps={};mems.forEach(m=>comps[m]=false);await db.collection('roomTasks').add({roomId:currentRoom.id,title,createdBy:getMyName(),completions:comps,createdAt:Date.now()});inp.value='';showToast('Task Added',title,'success')}
-
-    async function toggleRoomTask(taskId){
-      const t=roomTasks.find(x=>x.id===taskId);if(!t)return;
-      const m=getMyName();const comps=t.completions||{};comps[m]=!comps[m];
-      await db.collection('roomTasks').doc(taskId).update({completions:comps});
-      
-      // IN-APP NOTIFICATION
-      if(comps[m]){
-        const others=(currentRoom.members||[]).filter(x=>x!==m);
-        for(const o of others){
-          await createNotification(o,'task_done',`✅ ${m} completed "${t.title}"`,currentRoom.id);
-        }
-        if(checkAllDone()){
-          for(const mem of(currentRoom.members||[])){
-            await createNotification(mem,'all_done',`🎉 All tasks done in "${currentRoom.name}"!`,currentRoom.id);
-          }
-        }
-      }
-    }
-
+    async function toggleRoomTask(taskId){const t=roomTasks.find(x=>x.id===taskId);if(!t)return;const m=getMyName();const comps=t.completions||{};comps[m]=!comps[m];await db.collection('roomTasks').doc(taskId).update({completions:comps});if(comps[m]){const others=(currentRoom.members||[]).filter(x=>x!==m);for(const o of others)await createNotification(o,'task_done',`✅ ${m} completed "${t.title}"`,currentRoom.id);if(checkAllDone())for(const mem of(currentRoom.members||[]))await createNotification(mem,'all_done',`🎉 All tasks done in "${currentRoom.name}"!`,currentRoom.id)}}
     async function deleteRoomTask(taskId){showConfirm('Delete Task?','Remove for everyone?','🗑️',async()=>{await db.collection('roomTasks').doc(taskId).delete();showToast('Deleted','Task removed','success')},'Delete','modal-btn-delete')}
 
-    // ============ NAVIGATION ============
+    // ADMIN ACTIONS
+    async function deleteUser(uid){showConfirm('Delete User?','This will permanently delete this user and all their data.','⚠️',async()=>{await db.collection('users').doc(uid).delete();showToast('Deleted','User removed','success');loadAdminData()},'Delete','modal-btn-delete')}
+    async function deleteRoom(roomId){showConfirm('Delete Room?','This will delete the room and all its tasks.','⚠️',async()=>{await db.collection('rooms').doc(roomId).delete();const tasksSnap=await db.collection('roomTasks').where('roomId','==',roomId).get();for(const t of tasksSnap.docs)await db.collection('roomTasks').doc(t.id).delete();showToast('Deleted','Room removed','success');loadAdminData()},'Delete','modal-btn-delete')}
+
     function setPage(p){page=p;if(p==='friends'&&currentRoom)loadRoomData();render()}
     function logout(){if(unsub)unsub();if(roomTasksUnsub)roomTasksUnsub();if(notifUnsub)notifUnsub();auth.signOut()}
     function setupListeners(){document.getElementById('task-inp')?.addEventListener('keypress',e=>{if(e.key==='Enter')addTask()});document.getElementById('rt-inp')?.addEventListener('keypress',e=>{if(e.key==='Enter')addRoomTask()});document.getElementById('code-inp')?.addEventListener('keypress',e=>{if(e.key==='Enter')joinRoom()})}
 
-    // ============ TIMER ============
     function ud(){const d=document.getElementById('timer-disp');if(d){const m=Math.floor(ts/60),s=ts%60;d.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}}
     function toggleTimer(){const b=document.getElementById('timer-btn');if(tr){clearInterval(ti);tr=false;b.textContent='▶ Start';return}if(tm==='countdown'&&ts<=0)return;tr=true;b.textContent='⏸ Pause';ti=setInterval(()=>{tm==='countdown'?ts--:ts++;if(tm==='countdown'&&ts<=0){clearInterval(ti);tr=false;b.textContent='▶ Start';ts=0;ud();showAlert('Timer Done! ⏰','Time is up! Take a break.','🎉','OK',()=>{ts=1500;ud()})}ud()},1000)}
     function resetTimer(){clearInterval(ti);tr=false;ts=tm==='countdown'?1500:0;document.getElementById('timer-btn').textContent='▶ Start';ud()}
     function setPreset(m){ts=m*60;ud()}
     function setTimerMode(m){tm=m;resetTimer();document.getElementById('mode-cd').style.background=m==='countdown'?'rgba(255,255,255,0.15)':'transparent';document.getElementById('mode-sw').style.background=m==='stopwatch'?'rgba(255,255,255,0.15)':'transparent'}
 
-    // ============ INIT ============
     auth.onAuthStateChanged(u=>{if(u){user=u;loadData();loadNotifications()}else{user=null;render()}});
   </script>
 </body>
