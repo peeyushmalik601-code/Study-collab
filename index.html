@@ -144,7 +144,7 @@
     function loadNotifications(){
       if(notifUnsub)notifUnsub();
       notifUnsub=db.collection('notifications')
-        .where('userId','==',getMyName())
+        .where('userId','==',user.displayName || user.email) 
         .orderBy('createdAt','desc')
         .limit(20)
         .onSnapshot(s=>{
