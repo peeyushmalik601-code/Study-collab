@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head><title>Notification Test</title></head>
-<body>
-  <h2>Notification Test</h2>
-  <button onclick="test()">Test Notification</button>
-  <div id="result"></div>
+<body style="background:#1a1a2e;color:#fff;font-family:sans-serif;padding:20px;">
+  <h2>🔔 Notification Test</h2>
+  <button onclick="test()" style="padding:15px 30px;font-size:18px;background:#4facfe;color:#fff;border:none;border-radius:10px;">Test Notification</button>
+  <div id="result" style="margin-top:20px;"></div>
   
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
@@ -21,41 +21,48 @@
     
     async function test() {
       const r = document.getElementById('result');
-      r.innerHTML = 'Testing...';
+      r.innerHTML = '⏳ Testing...<br><br>';
       
       // Step 1: Permission
       const perm = await Notification.requestPermission();
-      r.innerHTML += `<p>1. Permission: ${perm}</p>`;
+      r.innerHTML += `1. Permission: <b>${perm}</b><br>`;
+      if (perm !== 'granted') { r.innerHTML += '❌ Permission denied!<br>'; return; }
       
-      if (perm !== 'granted') { r.innerHTML += '<p>❌ Permission denied!</p>'; return; }
-      
-      // Step 2: Service Worker
-      const regs = await navigator.serviceWorker.getRegistrations();
-      r.innerHTML += `<p>2. Service Workers: ${regs.length} found</p>`;
-      
-      // Step 3: Register SW
+      // Step 2: Register SW with CORRECT path
       try {
         const reg = await navigator.serviceWorker.register('/Study-collab/firebase-messaging-sw.js');
-        r.innerHTML += `<p>3. SW Registered: ✅</p>`;
+        messaging.useServiceWorker(reg);
+        r.innerHTML += '2. SW Registered: ✅<br>';
       } catch(e) {
-        r.innerHTML += `<p>3. SW Error: ${e.message}</p>`;
+        r.innerHTML += `2. SW Error: ${e.message}<br>`;
+        return;
       }
       
-      // Step 4: Get Token
+      // Step 3: Get Token
       try {
         const token = await messaging.getToken({ 
           vapidKey: 'BAp00Omr4ezHvV-Ukp5NipbaklNXsjGdZmuF0n9MywIZsTZqWLspbCrDEVNxckBnbQDvdT0HzhzvNB4VUdJhOZ4' 
         });
-        r.innerHTML += `<p>4. Token: ${token ? '✅ Got it!' : '❌ No token'}</p>`;
-        if (token) r.innerHTML += `<p style="word-break:break-all;font-size:10px;">${token}</p>`;
+        if (token) {
+          r.innerHTML += '3. Token: ✅ Got it!<br>';
+          r.innerHTML += `<span style="font-size:10px;word-break:break-all;">${token.substring(0,50)}...</span><br>`;
+        } else {
+          r.innerHTML += '3. Token: ❌ No token<br>';
+        }
       } catch(e) {
-        r.innerHTML += `<p>4. Token Error: ${e.message}</p>`;
+        r.innerHTML += `3. Token Error: ${e.message}<br>`;
+        return;
       }
       
-      // Step 5: Send test notification
+      // Step 4: Test notification
       if (Notification.permission === 'granted') {
-        new Notification('Test 🔔', { body: 'If you see this, notifications work!', icon: 'logo.png' });
-        r.innerHTML += '<p>5. Test notification sent! ✅</p>';
+        new Notification('Test Success! 🔔', { 
+          body: 'Notification is working perfectly!', 
+          icon: 'logo.png',
+          vibrate: [200, 100, 200]
+        });
+        r.innerHTML += '4. Test notification sent! ✅<br>';
+        r.innerHTML += '<br><b style="color:#2ed573;">🎉 Everything is working!</b>';
       }
     }
   </script>
