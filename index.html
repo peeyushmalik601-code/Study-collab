@@ -108,6 +108,15 @@
     const db = firebase.firestore();
     const auth = firebase.auth();
     const messaging = firebase.messaging();
+    // Firebase init के बाद (जहाँ messaging variable बना है उसके नीचे)
+
+// 🔧 SERVICE WORKER PATH FIX - बस ये 3 lines add करो
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/Study-collab/firebase-messaging-sw.js')
+    .then(registration => {
+      messaging.useServiceWorker(registration);
+    });
+}
 
     // ============ STATE ============
     let user=null,page='dashboard',tasks=[],rooms=[],currentRoom=null,roomTasks=[],unsub=null,roomTasksUnsub=null,authMode='login';
