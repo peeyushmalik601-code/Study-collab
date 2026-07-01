@@ -79,6 +79,23 @@
     .toast-error{border-left-color:#ff4757}
     
     /* ============ SIDE PANEL ============ */
+    .menu-btn{
+      position:fixed!important;top:12px!important;right:12px!important;
+      width:40px!important;height:40px!important;
+      border-radius:50%!important;
+      background:linear-gradient(135deg,rgba(255,165,0,0.5),rgba(255,107,129,0.5))!important;
+      backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;
+      border:1.5px solid rgba(255,255,255,0.4)!important;
+      color:#fff!important;cursor:pointer!important;font-size:18px!important;
+      z-index:99999!important;
+      display:flex!important;align-items:center!important;justify-content:center!important;
+      transition:all 0.3s!important;
+      box-shadow:0 4px 20px rgba(255,107,129,0.4)!important;
+      animation:glow 2s ease-in-out infinite!important;
+    }
+    @keyframes glow{0%,100%{box-shadow:0 4px 20px rgba(255,107,129,0.4)}50%{box-shadow:0 4px 30px rgba(255,165,0,0.7)}}
+    .menu-btn:active{transform:scale(0.9)!important}
+    
     .side-panel-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:5000;display:none}
     .side-panel{position:fixed;top:0;right:-340px;width:320px;height:100%;background:rgba(20,20,50,0.98);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border-left:1px solid rgba(255,255,255,0.1);z-index:5001;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);overflow-y:auto;padding:20px;box-shadow:-10px 0 60px rgba(0,0,0,0.5)}
     .side-panel.open{right:0}
@@ -96,15 +113,14 @@
     .tag-tg{background:rgba(46,213,115,0.3);color:#2ed573}
     .tag-game{background:rgba(255,165,0,0.3);color:#ffa502}
     .tag-media{background:rgba(168,85,247,0.3);color:#a855f7}
-    .menu-btn{position:fixed;top:20px;right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.2);color:#fff;cursor:pointer;font-size:20px;z-index:999;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
-    .menu-btn:hover{background:rgba(255,255,255,0.2);transform:scale(1.1)}
+    
     @media(max-width:400px){.timer-big{font-size:56px}.big-progress{font-size:42px}.stat-num{font-size:30px}.notif-panel{width:90%;left:5%;right:5%}.side-panel{width:280px;right:-300px}}
   </style>
 </head>
 <body>
   <div id="app"></div>
   
-  <!-- Menu Button -->
+  <!-- ✨ Menu Button -->
   <button class="menu-btn" id="menu-btn" onclick="openSidePanel()" title="Our Creations">✨</button>
   
   <!-- Side Panel Overlay -->
@@ -117,7 +133,6 @@
       <button class="side-panel-close" onclick="closeSidePanel()">✕</button>
     </div>
     
-    <!-- Projects List -->
     <a href="https://peeyushmalik601-code.github.io/Mediaplayer-bawal-h-/" target="_blank" class="project-card">
       <div class="project-icon">🎵</div>
       <div class="project-name">Media Player Bawal</div>
@@ -142,39 +157,28 @@
       <span class="project-tag tag-game">Bot</span>
     </a>
     
-    <!-- Add More Projects Here -->
-    
     <div style="text-align:center;opacity:0.4;margin-top:20px;font-size:12px;">
       More coming soon... 🚀
     </div>
   </div>
 
   <script>
-    // ============ SIDE PANEL FUNCTIONS ============
+    // ============ SIDE PANEL ============
     function openSidePanel() {
       document.getElementById('side-panel').classList.add('open');
       document.getElementById('side-overlay').classList.add('open');
     }
-    
     function closeSidePanel() {
       document.getElementById('side-panel').classList.remove('open');
       document.getElementById('side-overlay').classList.remove('open');
     }
-    
-    // Close panel on swipe right
     let touchStartX = 0;
-    document.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-    });
-    
+    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
     document.addEventListener('touchend', (e) => {
-      const diff = e.changedTouches[0].clientX - touchStartX;
-      if (diff > 80) {
-        closeSidePanel();
-      }
+      if (e.changedTouches[0].clientX - touchStartX > 80) closeSidePanel();
     });
 
-    // ============ FIREBASE INIT ============
+    // ============ FIREBASE ============
     const firebaseConfig = {
       apiKey: "AIzaSyDo2oJO2M2EiDKvvBpY2N7b8MZ38WeO5G4",
       authDomain: "study-8820a.firebaseapp.com",
@@ -187,14 +191,12 @@
     const db = firebase.firestore();
     const auth = firebase.auth();
 
-    // ============ STATE ============
     let user=null,page='dashboard',tasks=[],rooms=[],currentRoom=null,roomTasks=[],unsub=null,roomTasksUnsub=null,authMode='login';
     let notifications=[],notifUnsub=null,notifCount=0,notifPanelOpen=false;
     let ts=1500,tr=false,tm='countdown',ti=null;
 
     function getMyName(){return user?.displayName||user?.email?.split('@')[0]||'User'}
 
-    // ============ CUSTOM MODALS ============
     function showPrompt(title,placeholder,onConfirm){
       const overlay=document.createElement('div');overlay.className='modal-overlay';
       overlay.innerHTML=`<div class="modal-box"><div class="modal-icon">📝</div><div class="modal-title">${title}</div><input id="modal-input" class="input" placeholder="${placeholder}" style="margin:12px 0" autofocus/><div class="modal-buttons"><button class="modal-btn modal-btn-cancel" id="modal-cancel">Cancel</button><button class="modal-btn modal-btn-primary" id="modal-confirm">Create</button></div></div>`;
@@ -205,7 +207,6 @@
       inp.addEventListener('keypress',e=>{if(e.key==='Enter')document.getElementById('modal-confirm').click()});
       overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove()});
     }
-
     function showAlert(title,message,icon,btnText,onClose){
       const overlay=document.createElement('div');overlay.className='modal-overlay';
       overlay.innerHTML=`<div class="modal-box"><div class="modal-icon">${icon||'✅'}</div><div class="modal-title">${title}</div><div class="modal-text">${message}</div><button class="btn btn-primary" style="width:100%" id="modal-ok">${btnText||'OK'}</button></div>`;
@@ -213,7 +214,6 @@
       document.getElementById('modal-ok').onclick=()=>{overlay.remove();if(onClose)onClose()};
       overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove()});
     }
-
     function showConfirm(title,message,icon,onConfirm,confirmText,confirmClass){
       const overlay=document.createElement('div');overlay.className='modal-overlay';
       overlay.innerHTML=`<div class="modal-box"><div class="modal-icon">${icon||'🗑️'}</div><div class="modal-title">${title}</div><div class="modal-text">${message}</div><div class="modal-buttons"><button class="modal-btn modal-btn-cancel" id="modal-cancel">Cancel</button><button class="modal-btn ${confirmClass||'modal-btn-delete'}" id="modal-confirm">${confirmText||'Delete'}</button></div></div>`;
@@ -222,7 +222,6 @@
       document.getElementById('modal-confirm').onclick=()=>{overlay.remove();onConfirm()};
       overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove()});
     }
-
     function showToast(title,message,type='info'){
       const t=document.createElement('div');t.className=`toast toast-${type}`;
       t.innerHTML=`<b>${title}</b><br><span style="font-size:12px;opacity:0.7">${message}</span>`;
@@ -230,12 +229,10 @@
       setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity 0.3s';setTimeout(()=>t.remove(),300)},3000);
     }
 
-    // ============ IN-APP NOTIFICATIONS ============
     function loadNotifications(){
       if(notifUnsub)notifUnsub();
       notifUnsub=db.collection('notifications').where('userId','==',getMyName()).orderBy('createdAt','desc').limit(20).onSnapshot(s=>{notifications=[];s.forEach(d=>notifications.push({id:d.id,...d.data()}));notifCount=notifications.filter(n=>!n.read).length;render();},err=>{console.error("Notification Error:",err)});
     }
-
     async function createNotification(userName,type,message,roomId){await db.collection('notifications').add({userId:userName,type,message,roomId,read:false,createdAt:Date.now()});}
     async function markNotifRead(id){await db.collection('notifications').doc(id).update({read:true});}
     async function markAllNotifRead(){for(const n of notifications){if(!n.read)await db.collection('notifications').doc(n.id).update({read:true})}}
@@ -243,7 +240,6 @@
     function getTimeAgo(ts){const s=Math.floor((Date.now()-ts)/1000);if(s<60)return'Just now';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago';}
     function checkAllDone(){if(!currentRoom||!roomTasks.length)return false;for(const m of(currentRoom.members||[])){if(roomTasks.filter(t=>t.completions&&t.completions[m]).length<roomTasks.length)return false}return true;}
 
-    // ============ RENDER ============
     function render(){
       const app=document.getElementById('app');
       if(!user){
@@ -252,6 +248,7 @@
         document.getElementById('google-btn').onclick=()=>auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e=>{document.getElementById('auth-msg').textContent=e.message});
         return;
       }
+      document.getElementById('menu-btn').style.display='flex';
       app.innerHTML=`<header class="glass" style="margin:14px;display:flex;justify-content:space-between;align-items:center;padding:14px 20px"><span style="font-size:20px;font-weight:800;background:linear-gradient(to right,#4facfe,#00f2fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent">📚 StudyCollab</span><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;cursor:pointer" onclick="toggleNotifPanel()"><span style="font-size:20px">🔔</span>${notifCount>0?`<span class="notif-badge">${notifCount}</span>`:''}</div><span style="font-size:13px;opacity:0.7">👋 ${getMyName()}</span><button class="btn" style="padding:6px 14px;font-size:12px" onclick="logout()">Exit</button></div></header><div class="notif-panel" id="notif-panel"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>🔔 Notifications</b>${notifCount>0?`<button class="btn" style="padding:4px 12px;font-size:11px" onclick="markAllNotifRead()">Mark all read</button>`:''}</div>${notifications.length===0?'<p style="text-align:center;opacity:0.4;padding:20px">No notifications yet</p>':notifications.map(n=>`<div class="notif-item" style="${!n.read?'border-left:3px solid #4facfe;':''}" onclick="markNotifRead('${n.id}')"><div style="font-weight:${n.read?'400':'600'}">${n.message}</div><div class="notif-time">${getTimeAgo(n.createdAt)}</div></div>`).join('')}</div><main style="padding:0 14px 100px;max-width:550px;margin:0 auto">${getPage()}</main><div class="dock"><button class="dock-item ${page==='dashboard'?'active':''}" onclick="setPage('dashboard')">📊</button><button class="dock-item ${page==='tasks'?'active':''}" onclick="setPage('tasks')">✅</button><button class="dock-item ${page==='timer'?'active':''}" onclick="setPage('timer')">⏱️</button><button class="dock-item ${page==='friends'?'active':''}" onclick="setPage('friends')">👥</button></div>`;
       setupListeners();
     }
@@ -267,16 +264,12 @@
       }
     }
 
-    // ============ DATA ============
     function loadData(){if(unsub)unsub();unsub=db.collection('tasks').where('userId','==',user.uid).onSnapshot(s=>{tasks=[];s.forEach(d=>tasks.push({id:d.id,...d.data()}));tasks.sort((a,b)=>b.createdAt-a.createdAt);db.collection('rooms').onSnapshot(rs=>{rooms=[];rs.forEach(d=>{const data=d.data();if(data.members&&data.members.includes(getMyName()))rooms.push({id:d.id,...data})});if(currentRoom)loadRoomData();else render()})})}
     function loadRoomData(){if(!currentRoom)return;if(roomTasksUnsub)roomTasksUnsub();roomTasksUnsub=db.collection('roomTasks').where('roomId','==',currentRoom.id).onSnapshot(s=>{roomTasks=[];s.forEach(d=>roomTasks.push({id:d.id,...d.data()}));render()});db.collection('rooms').doc(currentRoom.id).onSnapshot(doc=>{if(doc.exists)currentRoom={id:doc.id,...doc.data()};else{currentRoom=null;if(roomTasksUnsub)roomTasksUnsub()}render()})}
 
-    // ============ TASKS ============
     async function addTask(){const i=document.getElementById('task-inp'),p=document.getElementById('task-pri');if(!i.value.trim())return;await db.collection('tasks').add({userId:user.uid,title:i.value.trim(),priority:p.value,completed:false,createdAt:Date.now()});i.value=''}
     async function toggleTask(id){const t=tasks.find(x=>x.id===id);if(t)await db.collection('tasks').doc(id).update({completed:!t.completed})}
     async function deleteTask(id){await db.collection('tasks').doc(id).delete()}
-
-    // ============ ROOMS ============
     async function createRoom(){showPrompt('Create New Room','Enter room name...',async(name)=>{const code=Math.random().toString(36).substring(2,8).toUpperCase();const myName=getMyName();const doc=await db.collection('rooms').add({name,code,members:[myName],createdBy:myName,createdAt:Date.now()});currentRoom={id:doc.id,name,code,members:[myName]};showAlert('Room Created! 🎉',`Share this code with friends:<br><div class="modal-code">${code}</div>`,'🏠','OK');loadRoomData()})}
     async function joinRoom(){const code=document.getElementById('code-inp')?.value?.trim().toUpperCase();if(!code){showToast('Oops!','Please enter invite code','error');return}const snap=await db.collection('rooms').where('code','==',code).get();if(snap.empty){showAlert('Not Found','No room with this code.','🔍');return}const doc=snap.docs[0],data=doc.data();const myName=getMyName();if(!data.members.includes(myName)){data.members.push(myName);await db.collection('rooms').doc(doc.id).update({members:data.members})}currentRoom={id:doc.id,...data,members:data.members};showToast('Success!',`Joined: ${data.name}`,'success');loadRoomData()}
     async function enterRoom(id){const doc=await db.collection('rooms').doc(id).get();if(doc.exists){currentRoom={id:doc.id,...doc.data()};loadRoomData()}}
@@ -286,7 +279,7 @@
     async function deleteRoomTask(taskId){showConfirm('Delete Task?','Remove for everyone?','🗑️',async()=>{await db.collection('roomTasks').doc(taskId).delete();showToast('Deleted','Task removed','success')},'Delete','modal-btn-delete')}
 
     function setPage(p){page=p;if(p==='friends'&&currentRoom)loadRoomData();render()}
-    function logout(){if(unsub)unsub();if(roomTasksUnsub)roomTasksUnsub();if(notifUnsub)notifUnsub();auth.signOut()}
+    function logout(){if(unsub)unsub();if(roomTasksUnsub)roomTasksUnsub();if(notifUnsub)notifUnsub();document.getElementById('menu-btn').style.display='none';auth.signOut()}
     function setupListeners(){document.getElementById('task-inp')?.addEventListener('keypress',e=>{if(e.key==='Enter')addTask()});document.getElementById('rt-inp')?.addEventListener('keypress',e=>{if(e.key==='Enter')addRoomTask()});document.getElementById('code-inp')?.addEventListener('keypress',e=>{if(e.key==='Enter')joinRoom()})}
 
     function ud(){const d=document.getElementById('timer-disp');if(d){const m=Math.floor(ts/60),s=ts%60;d.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}}
@@ -295,7 +288,7 @@
     function setPreset(m){ts=m*60;ud()}
     function setTimerMode(m){tm=m;resetTimer();document.getElementById('mode-cd').style.background=m==='countdown'?'rgba(255,255,255,0.15)':'transparent';document.getElementById('mode-sw').style.background=m==='stopwatch'?'rgba(255,255,255,0.15)':'transparent'}
 
-    auth.onAuthStateChanged(u=>{if(u){user=u;loadData();loadNotifications()}else{user=null;render()}});
+    auth.onAuthStateChanged(u=>{if(u){user=u;loadData();loadNotifications();document.getElementById('menu-btn').style.display='flex'}else{user=null;document.getElementById('menu-btn').style.display='none';render()}});
   </script>
 </body>
 </html>
